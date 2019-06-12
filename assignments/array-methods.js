@@ -55,43 +55,85 @@ const runners = [{"id":1,"first_name":"Charmain","last_name":"Seiler","email":"c
 
 // ==== Challenge 1: Use .forEach() ====
 // The event director needs both the first and last names of each runner for their running bibs.  Combine both the first and last names into a new array called fullName.
-let fullName = runners.map((name) => {
-  return {"full name": name.first_name + " " + name.last_name};
+
+let fullName = []
+runners.forEach(function(runner) {
+  fullName.push(runner.first_name + " " + runner.last_name);
 });
 console.log(fullName);
 
-// let fullName = []
-// runners.forEach(function(name)) {
-//   fullName.push(first_name + " " + last_name);
-// }
-// console.log(fullName);
-
 // ==== Challenge 2: Use .map() ====
 // The event director needs to have all the runner's first names converted to uppercase because the director BECAME DRUNK WITH POWER. Convert each first name into all caps and log the result
-let allCaps = runners.map((firstName) => {
-  return {"FIRST NAME": firstName.first_name.toUpperCase()};
+let allCaps = runners.map((runner) => {
+  return {"FIRST NAME": runner.first_name.toUpperCase()};
 });
 console.log(allCaps);
 
 // ==== Challenge 3: Use .filter() ====
 // The large shirts won't be available for the event due to an ordering issue.  Get a list of runners with large sized shirts so they can choose a different size. Return an array named largeShirts that contains information about the runners that have a shirt size of L and log the result
-let largeShirts = runners.filter((shirts) => {
-  return shirts.shirt_size == "L";
+let largeShirts = runners.filter((runner) => {
+  return runner.shirt_size == "L";
 });
 console.log(largeShirts);
 
 // ==== Challenge 4: Use .reduce() ====
 // The donations need to be tallied up and reported for tax purposes. Add up all the donations into a ticketPriceTotal array and log the result
-let ticketPriceTotal = runners.reduce((total, donations) => {
-  return total += donations.donation;
+let ticketPriceTotal = runners.reduce((total, runner) => {
+  return total += runner.donation;
 }, 0);
 console.log(ticketPriceTotal);
 
+// let sum = 0;
+// let nums = [1,2,3,4];
+// for (let i = 0; i < nums.length; i++) {
+//   sum += nums[i]
+// }
 // ==== Challenge 5: Be Creative ====
 // Now that you have used .forEach(), .map(), .filter(), and .reduce().  I want you to think of potential problems you could solve given the data set and the 5k fun run theme.  Try to create and then solve 3 unique problems using one or many of the array methods listed above.
 
 // Problem 1
+//Use .filter() to sort the runners into gold, silver, and bronze-level memberships based on their donation amount.
+let goldLevelMembers = runners.filter((runner) => {
+  return runner.donation > 250;
+});
+let silverLevelMembers = runners.filter((runner) => {
+  return runner.donation <= 250 && runner.donation > 150;
+});
+let bronzeLevelMembers = runners.filter((runner) => {
+  return runner.donation <= 150;
+});
+console.log("Gold: ", goldLevelMembers);
+console.log("Silver: ", silverLevelMembers);
+console.log("Bronze: ", bronzeLevelMembers);
 
 // Problem 2
+// Use .reduce() to return a single object that contains all members in their three respective membership levels.
+const Members = runners.reduce((membership, runner) => {
+  if (runner.donation > 250){
+    membership.Gold.push(runner)
+  } else if (runner.donation <= 250 && runner.donation > 150){
+    membership.Silver.push(runner)
+  } else {
+    membership.Bronze.push(runner)
+  };
+  return membership;
+}, {Gold: [], Silver: [], Bronze: []});
+console.log(Members);
+
+
 
 // Problem 3
+//We'd like to recognize the companies on t-shirts for the runners that are gold, silver, and bronze-level members. Use .map() to create lists of the companies that pertain to each membership level.
+
+let goldMemberCompanies = goldLevelMembers.map((runner) => {
+  return runner.company_name;
+})
+let silverMemberCompanies = silverLevelMembers.map((runner) => {
+  return runner.company_name;
+})
+let bronzeMemberCompanies = bronzeLevelMembers.map((runner) => {
+  return runner.company_name;
+})
+console.log("Gold member companies: ", goldMemberCompanies);
+console.log("Silver member companies: ", silverMemberCompanies);
+console.log("Bronze member companies: ", bronzeMemberCompanies);

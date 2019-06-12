@@ -63,8 +63,16 @@ multiplyNums(5, 5, (multiply) => {
 
 function contains(item, list, cb) {
   // contains checks if an item is present inside of the given array/list.
+  if (list.includes(item)) {
+    return cb(true);
+  } else {
+    return cb(false);
+  }
   // Pass true to the callback if it is, otherwise pass false.
-}
+};
+contains("yo-yo", items, function(doesContain) {
+  console.log(doesContain);
+});
 
 /* STRETCH PROBLEM */
 
